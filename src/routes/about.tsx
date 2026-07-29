@@ -6,7 +6,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { Counter } from "@/components/site/Counter";
 import { CtaSection } from "@/components/site/CtaSection";
 import { stats } from "@/lib/site-data";
-import aboutTeam from "@/assets/about-team.jpg";
+import aboutTeam from "@/assets/about-team.jpeg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
