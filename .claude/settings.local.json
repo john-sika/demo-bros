@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xxd \"D:\\\\Dedicated Work\\\\Demo Bros\\\\Demos Bros Site\\\\public\\\\fonts\\\\AkiraExpanded.woff\")",
+      "Bash(npx tsc *)"
+    ]
+  }
+}
