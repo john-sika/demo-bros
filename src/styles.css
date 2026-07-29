@@ -9,9 +9,12 @@
    #1A1A1A charcoal · #F2F1EF bone · #2D9D3A green
 =================================================== */
 
+/* font-weight matches the font's own OS/2 usWeightClass (800). Keep the
+   @utility font-heading weight below in sync — requesting a weight this face
+   doesn't declare makes some browsers synthesise a faux bold. */
 @font-face {
   font-family: "Akira Expanded";
-  src: url("/fonts/AkiraExpanded.woff") format("woff");
+  src: url("/fonts/AkiraExpanded.woff2") format("woff2");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -157,12 +160,15 @@
   }
 }
 
-/* Display heading utility */
+/* Display heading utility.
+   font-weight must match the @font-face descriptor above (800). Requesting 900
+   against the single 800 face makes some browsers synthesise a faux bold.
+   Akira Expanded is a static CFF font with no variation axes, so font-stretch /
+   font-variation-settings had no effect and are omitted — the family is already
+   expanded by design. */
 @utility font-heading {
   font-family: var(--font-heading);
-  font-weight: 900;
-  font-stretch: 125%;
-  font-variation-settings: "wdth" 125;
+  font-weight: 800;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   line-height: 1.05;
