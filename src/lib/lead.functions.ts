@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { leadSchema } from "./quote-schema";
 import { services } from "./site-data";
+import { normaliseAuPhone, sendToWebhook } from "./ghl";
 
 function serviceLabel(slug: string): string {
   if (slug === "other") return "Something else";
@@ -27,7 +28,7 @@ export const submitLead = createServerFn({ method: "POST" })
 
     const webhookUrl = process.env.GHL_WEBHOOK_URL;
     if (!webhookUrl) {
-      // Backstop: log the full lead so it's recoverable from Cloudflare logs
+      // Backstop: log the full lead so it's recoverable from the platform logs
       // even before the webhook URL is configured.
       console.error(
         "[submitLead] GHL_WEBHOOK_URL is not set — lead NOT forwarded:",
@@ -37,12 +38,12 @@ export const submitLead = createServerFn({ method: "POST" })
     }
 
     const { first_name, last_name } = splitName(data.name);
-    const payload = {
+    const payload: Record<string, string> = {
       first_name,
       last_name,
       full_name: data.name,
       email: data.email,
-      phone: data.phone,
+      phone: normaliseAuPhone(data.phone),
       suburb: data.suburb,
       service: serviceLabel(data.service),
       service_slug: data.service,
@@ -56,29 +57,13 @@ export const submitLead = createServerFn({ method: "POST" })
       ...data.tracking,
     };
 
-    let res: Response;
-    try {
-      res = await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-    } catch (error) {
+    const result = await sendToWebhook(webhookUrl, payload);
+    if (!result.ok) {
       console.error(
-        "[submitLead] Network error POSTing to GHL webhook:",
-        error,
-        "Lead:",
+        `[submitLead] GHL webhook failed (${result.status}): ${result.detail} — Lead:`,
         JSON.stringify(payload),
       );
       throw new Error("Failed to send lead.");
-    }
-
-    if (!res.ok) {
-      console.error(
-        `[submitLead] GHL webhook responded ${res.status} — lead may not have arrived. Lead:`,
-        JSON.stringify(payload),
-      );
-      throw new Error(`Webhook responded ${res.status}`);
     }
 
     return { ok: true as const };
