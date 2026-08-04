@@ -102,6 +102,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: logomarkSvg, type: "image/svg+xml" },
     ],
     scripts: [
+      // Google Tag Manager — container GTM-M9642CM. Rendered by <HeadContent /> into
+      // <head> on every route. All downstream tags (GA4, Google Ads, Meta Pixel) are
+      // managed inside the GTM container, not in this codebase.
+      {
+        children: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M9642CM');`,
+      },
       {
         type: "application/ld+json",
         children: JSON.stringify({
@@ -146,6 +156,13 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body suppressHydrationWarning>
+        {/* Google Tag Manager (noscript) — must stay the first node inside <body>. */}
+        <noscript
+          dangerouslySetInnerHTML={{
+            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9642CM"
+height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+          }}
+        />
         {children}
         <Scripts />
       </body>
