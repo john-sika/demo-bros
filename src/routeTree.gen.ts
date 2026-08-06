@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ThankYouRouteImport } from './routes/thank-you'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as StripOutDemolitionRouteImport } from './routes/strip-out-demolition'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -32,6 +33,11 @@ import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
 import { Route as LocationsSlugRouteImport } from './routes/locations.$slug'
 
+const ThankYouRoute = ThankYouRouteImport.update({
+  id: '/thank-you',
+  path: '/thank-you',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/strip-out-demolition': typeof StripOutDemolitionRoute
   '/terms': typeof TermsRoute
+  '/thank-you': typeof ThankYouRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/strip-out-demolition': typeof StripOutDemolitionRoute
   '/terms': typeof TermsRoute
+  '/thank-you': typeof ThankYouRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
@@ -206,6 +214,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/strip-out-demolition': typeof StripOutDemolitionRoute
   '/terms': typeof TermsRoute
+  '/thank-you': typeof ThankYouRoute
   '/locations/$slug': typeof LocationsSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
@@ -232,6 +241,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/strip-out-demolition'
     | '/terms'
+    | '/thank-you'
     | '/locations/$slug'
     | '/projects/$slug'
     | '/services/$slug'
@@ -253,6 +263,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/strip-out-demolition'
     | '/terms'
+    | '/thank-you'
     | '/locations/$slug'
     | '/projects/$slug'
     | '/services/$slug'
@@ -277,6 +288,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/strip-out-demolition'
     | '/terms'
+    | '/thank-you'
     | '/locations/$slug'
     | '/projects/$slug'
     | '/services/$slug'
@@ -302,10 +314,18 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StripOutDemolitionRoute: typeof StripOutDemolitionRoute
   TermsRoute: typeof TermsRoute
+  ThankYouRoute: typeof ThankYouRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/thank-you': {
+      id: '/thank-you'
+      path: '/thank-you'
+      fullPath: '/thank-you'
+      preLoaderRoute: typeof ThankYouRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/terms': {
       id: '/terms'
       path: '/terms'
@@ -522,6 +542,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StripOutDemolitionRoute: StripOutDemolitionRoute,
   TermsRoute: TermsRoute,
+  ThankYouRoute: ThankYouRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

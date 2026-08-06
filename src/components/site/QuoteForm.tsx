@@ -39,7 +39,14 @@ export function QuoteForm() {
           tracking: getTracking(),
         },
       });
+      // Success only — a failed submit must never reach /thank-you, or it would be
+      // counted as a lead conversion.
       setSubmitted(true);
+      // Full page load rather than a router navigation: Google Tag Manager
+      // (GTM-M9642CM) is injected once per document, and the lead conversions are
+      // triggered by a page view on a URL containing "/thank-you". A client-side
+      // navigation would change the URL without producing that page view.
+      window.location.assign("/thank-you");
     } catch {
       setErrorMsg(
         "Something went wrong sending your request. Please try again — or call us on 1800 960 625 and we'll sort it straight away.",
