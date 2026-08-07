@@ -34,8 +34,10 @@ export interface Service {
 
 export const services: Service[] = [
   {
+    // Slug deliberately left as kitchen-demolition: the page is indexed at that
+    // URL and only the display label changed.
     slug: "kitchen-demolition",
-    title: "Kitchen Demolition",
+    title: "Kitchen Strip Outs",
     short: "Complete kitchen strip outs — cabinetry, benchtops, tiles, appliances. Reno-ready in a day.",
     image: "/images/kitchen-demolition/hero.jpg",
     featured: true,
@@ -317,6 +319,193 @@ export const services: Service[] = [
       "/images/renovation-preparation/gallery-01.jpg",
       "/images/renovation-preparation/gallery-02.jpg",
       "/images/renovation-preparation/gallery-03.jpg",
+    ],
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // REMOVAL SERVICES — added Jul 2026 for the grouped header menu.
+  //
+  // TODO (before publish):
+  //  1. Copy below is a first draft written to match the existing page
+  //     structure. It has NOT been reviewed by Demo Bros. Verify every claim.
+  //  2. No job photography exists for these four — each reuses an image from a
+  //     related service. Replace with real photos.
+  //  3. ASBESTOS especially: removal is licensed work in Victoria (WorkSafe A
+  //     and B class licences). The copy below deliberately does not state which
+  //     licence Demo Bros holds, or that it self-performs removal. Confirm the
+  //     licence position with the CEO and rewrite accordingly before publish.
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "rubbish-removal",
+    title: "Rubbish Removal",
+    short: "Builders' waste, demolition debris and site clean-ups cleared and responsibly disposed of.",
+    image: "/images/internal-demolition/hero.jpg",
+    featured: false,
+    kicker: "Rubbish removal",
+    h1: "Rubbish removal in Melbourne",
+    metaTitle: "Rubbish Removal Melbourne | Builders' Waste Clearance — Demo Bros",
+    metaDescription:
+      "Rubbish removal across Melbourne — builders' waste, demolition debris and site clean-ups cleared on a fixed price, sorted for recycling where possible.",
+    intro:
+      "Builders' waste, demolition debris and general site rubbish loaded out and disposed of properly. Fixed price, no skip permits to chase, and the site left broom-swept.",
+    body: [
+      "Rubbish is the part of a job that quietly eats a program. Skips fill faster than expected, permits take time on narrow streets, and a cluttered site slows every trade that follows. Demo Bros clears builders' waste, demolition debris, packaging, offcuts and general site rubbish in one coordinated visit.",
+      "We sort material for recycling where it is practical to do so, dispose of the rest through licensed facilities, and hand the site back clean and ready for the next trade. Fixed price, quoted up front.",
+    ],
+    bullets: [
+      "Builders' waste — timber, plasterboard, offcuts, packaging and general construction rubbish",
+      "Demolition debris — brick, concrete, tile and rubble loaded out and cleared",
+      "Site clean-ups — end-of-job clears so the space is ready for handover or the next trade",
+      "Sorted for recycling where practical, with the balance disposed of through licensed facilities",
+      "No skip hire or permits to arrange — we bring the labour and the trucks",
+    ],
+    faqs: [
+      { q: "Do I need a skip permit?", a: "No. We load directly to our own trucks, so there's no skip sitting on the street and no council permit to arrange." },
+      { q: "What can't you take?", a: "Asbestos and hazardous material are handled separately under the correct controls — tell us if you suspect any and we'll scope it properly rather than mixing it with general waste." },
+      { q: "Do you recycle?", a: "We separate material for recycling wherever it's practical on the job, and dispose of the remainder through licensed facilities." },
+      { q: "How is it priced?", a: "On volume and access, confirmed as a fixed price before we start. Send photos and we can usually quote without a site visit." },
+    ],
+    gallery: ["/images/internal-demolition/gallery-01.jpg"],
+  },
+  {
+    slug: "junk-removal",
+    title: "Junk Removal",
+    short: "Furniture, whitegoods and accumulated household or office junk cleared in a single visit.",
+    image: "/images/internal-demolition/gallery-02.jpg",
+    featured: false,
+    kicker: "Junk removal",
+    h1: "Junk removal in Melbourne",
+    metaTitle: "Junk Removal Melbourne | Furniture & Whitegoods Clearance — Demo Bros",
+    metaDescription:
+      "Junk removal across Melbourne — furniture, whitegoods, office fitout and accumulated household clutter cleared in one visit. Fixed price, clean handover.",
+    intro:
+      "Old furniture, whitegoods, office equipment and accumulated clutter cleared out in a single visit. We do the lifting and the loading, and leave the space clean.",
+    body: [
+      "Junk removal is the job people put off because it means carrying heavy, awkward things down stairs. Demo Bros handles the lot — lounges, mattresses, wardrobes, fridges, washing machines, desks, filing cabinets and the boxes that have been in the garage for a decade.",
+      "We work through houses, apartments, offices and storage units across Melbourne, manage tight access and stairs, and dispose of everything responsibly. Reusable items are diverted where we can. Fixed price, quoted before we start.",
+    ],
+    bullets: [
+      "Furniture — lounges, beds, mattresses, wardrobes, tables and outdoor furniture",
+      "Whitegoods & appliances — fridges, washers, dryers, dishwashers and ovens removed",
+      "Office clear-outs — desks, chairs, filing cabinets, partitions and old IT equipment",
+      "Full house or garage clears, including stairs and tight apartment access",
+      "Reusable items diverted where possible; the rest disposed of responsibly",
+    ],
+    faqs: [
+      { q: "Do I need to move anything to the kerb?", a: "No. We remove items from wherever they sit — upstairs, in the garage, out the back. The lifting is our job." },
+      { q: "Can you handle apartment access?", a: "Yes. We work around lift bookings, loading docks and body-corporate requirements regularly across Melbourne." },
+      { q: "What happens to it all?", a: "Anything still usable is diverted where we can, and the balance goes through licensed disposal facilities." },
+      { q: "How quickly can you come?", a: "Most junk removals can be booked within a few days. Tell us the volume and access and we'll confirm the earliest slot." },
+    ],
+    gallery: ["/images/internal-demolition/gallery-03.jpg"],
+  },
+  {
+    slug: "asbestos-removal",
+    title: "Asbestos Removal",
+    short: "Suspected asbestos identified, contained and removed under licensed controls before works begin.",
+    image: "/images/partial-demolition/hero.jpg",
+    featured: false,
+    kicker: "Asbestos removal",
+    h1: "Asbestos removal in Melbourne",
+    metaTitle: "Asbestos Removal Melbourne | Licensed Removal & Clearance — Demo Bros",
+    metaDescription:
+      "Asbestos identification, containment and licensed removal across Melbourne, with independent clearance before demolition or strip-out works continue.",
+    intro:
+      "If asbestos is found — or suspected — it gets handled properly before anything else happens. Identification, containment, licensed removal and independent clearance, with the paperwork to prove it.",
+    body: [
+      "Any Melbourne building from before the late 1980s can contain asbestos: eaves, wall sheeting, vinyl backing, fencing, roof sheets and pipe lagging. It is not something to discover halfway through a strip-out. Where a property is likely to contain it, we arrange sampling and testing before works begin.",
+      "Removal is licensed work in Victoria and is carried out under WorkSafe requirements — the area is contained and signed, material is removed and wrapped under controlled conditions, and waste goes to a facility licensed to receive it. Independent clearance is obtained before other trades return to the area, and you receive the documentation for your records.",
+    ],
+    bullets: [
+      "Identification — sampling and NATA-accredited testing where asbestos is suspected",
+      "Containment — the work area sealed and signed before removal begins",
+      "Licensed removal — carried out under WorkSafe Victoria requirements and controls",
+      "Licensed disposal — waste transported to a facility licensed to receive asbestos",
+      "Independent clearance — obtained before other trades return, with documentation supplied",
+    ],
+    faqs: [
+      { q: "How do I know if my property has asbestos?", a: "Any Melbourne building constructed or renovated before the late 1980s may contain it. The only way to be certain is sampling and laboratory testing, which we arrange before works start." },
+      { q: "Can you just work around it?", a: "No. Disturbing asbestos is what makes it dangerous, so it's identified and dealt with before demolition or strip-out work begins in that area." },
+      { q: "Do I get documentation?", a: "Yes. You receive the test results, disposal records and the independent clearance certificate for your records." },
+      { q: "Will it delay my project?", a: "It adds time, but far less than discovering it mid-job and stopping work. Scoping it up front is what keeps the program predictable." },
+    ],
+    gallery: ["/images/partial-demolition/gallery-01.jpg"],
+  },
+  {
+    slug: "hoarding-removal",
+    title: "Hoarding Removal",
+    short: "Sensitive, discreet clearing of heavily cluttered properties, restoring the space safely.",
+    image: "/images/house-demolition/gallery-01.jpg",
+    featured: false,
+    kicker: "Hoarding removal",
+    h1: "Hoarding clean-up & removal in Melbourne",
+    metaTitle: "Hoarding Removal Melbourne | Discreet Property Clean-Up — Demo Bros",
+    metaDescription:
+      "Discreet hoarding clean-up and removal across Melbourne. Heavily cluttered properties cleared safely and respectfully, with unmarked vehicles on request.",
+    intro:
+      "Heavily cluttered properties cleared safely, respectfully and without judgement. We work at a pace that suits the household, and can attend in unmarked vehicles.",
+    body: [
+      "Hoarding clean-ups are as much about people as property. There is often a family member, landlord or support worker involved, and the household may need items sorted rather than simply thrown out. Demo Bros works to whatever pace and boundaries are agreed before we arrive.",
+      "Practically, these properties can carry real hazards — blocked exits, unstable stacks, pests, spoiled food and biological contamination. Our crews use appropriate protective equipment, clear methodically so exits stay usable, and can arrange specialist cleaning or pest treatment once the space is emptied. Unmarked vehicles are available on request.",
+    ],
+    bullets: [
+      "Discreet attendance — unmarked vehicles available on request",
+      "Agreed sorting — items set aside for keeping, donation or disposal as directed",
+      "Safe methodical clearing — exits and walkways kept usable throughout",
+      "Hazard-aware — appropriate PPE for pests, spoiled material and biological contamination",
+      "Specialist deep cleaning and pest treatment coordinated once the property is cleared",
+    ],
+    faqs: [
+      { q: "Will the neighbours know?", a: "Not from us. We can attend in unmarked vehicles and work discreetly — it's a common request and we're used to it." },
+      { q: "Can we keep some things?", a: "Yes. We agree beforehand what's kept, donated or disposed of, and can sort as we go rather than clearing indiscriminately." },
+      { q: "Do you clean afterwards?", a: "We clear the property and can coordinate specialist deep cleaning and pest treatment once it's empty, if that's needed." },
+      { q: "How is it quoted?", a: "On volume, access and condition. Given the sensitivity, we're happy to quote from photos or a short private walkthrough — whichever is easier." },
+    ],
+    gallery: ["/images/house-demolition/gallery-02.jpg"],
+  },
+];
+
+/**
+ * Header navigation grouping. Items point either at a /services/$slug page or at
+ * a standalone route (Commercial Demolition has its own landing page), so each
+ * carries its own `to` rather than being derived from the slug.
+ */
+export type ServiceNavItem = { label: string; to: string; params?: { slug: string } };
+export type ServiceNavGroup = { label: string; items: ServiceNavItem[] };
+
+const svc = (slug: string, label: string): ServiceNavItem => ({
+  label,
+  to: "/services/$slug",
+  params: { slug },
+});
+
+export const serviceGroups: ServiceNavGroup[] = [
+  {
+    label: "Demolitions",
+    items: [
+      svc("house-demolition", "House Demolition"),
+      svc("partial-demolition", "Partial Demolition"),
+      svc("internal-demolition", "Internal Demolition"),
+      { label: "Commercial Demolition", to: "/commercial-demolition" },
+    ],
+  },
+  {
+    label: "Strip-outs",
+    items: [
+      svc("bathroom-strip-outs", "Bathroom Strip Outs"),
+      svc("kitchen-demolition", "Kitchen Strip Outs"),
+      svc("commercial-strip-outs", "Commercial Strip Outs"),
+      svc("office-defits", "Office Defits"),
+      svc("renovation-preparation", "Renovation Preparation"),
+    ],
+  },
+  {
+    label: "Removal",
+    items: [
+      svc("rubbish-removal", "Rubbish Removal"),
+      svc("junk-removal", "Junk Removal"),
+      svc("asbestos-removal", "Asbestos Removal"),
+      svc("hoarding-removal", "Hoarding Removal"),
     ],
   },
 ];

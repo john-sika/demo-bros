@@ -106,7 +106,10 @@ function ServiceRow({ s, i }: { s: typeof services[0]; i: number }) {
           <span className="font-heading text-sm text-muted-foreground lg:text-base">
             {String(i + 1).padStart(2, "0")}
           </span>
-          <h2 className="font-heading text-3xl uppercase transition-colors group-hover:text-primary sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+          {/* Sized off the longest title ("Renovation Preparation") so every row
+              stays on one line. The old lg:text-6xl / xl:text-7xl steps were
+              wider than the row could hold and wrapped the longer names. */}
+          <h2 className="font-heading text-[clamp(1.5rem,4vw,3rem)] uppercase transition-colors group-hover:text-primary">
             {s.title}
           </h2>
         </div>

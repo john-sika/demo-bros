@@ -157,10 +157,16 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body suppressHydrationWarning>
         {/* Google Tag Manager (noscript) — must stay the first node inside <body>. */}
+        {/* @tanstack/devtools-vite stamps a dev-only data-tsd-source="file:line:col"
+            attribute on JSX, and computes a different line for this node in the
+            server vs client transform — which React reports as a hydration
+            mismatch on every page load. The attribute doesn't exist in the
+            production build, and the markup here is a static string that can't
+            legitimately differ, so suppressing the check on this node is safe. */}
         <noscript
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9642CM"
-height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+            __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M9642CM" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
           }}
         />
         {children}

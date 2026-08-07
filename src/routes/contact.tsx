@@ -67,12 +67,30 @@ function ContactPage() {
                   <p className="mt-4 text-xl sm:text-2xl font-semibold lg:text-3xl break-words">{SITE.address}</p>
                   <p className="mt-3 text-sm text-charcoal/60 uppercase tracking-widest">Servicing {serviceAreas.length} regions across greater Melbourne</p>
                 </div>
-                <div className="rounded-3xl border border-black/10 bg-light p-6 sm:p-8 lg:p-10 shadow-lg">
-                  <h2 className="font-heading text-xl sm:text-2xl uppercase tracking-tight text-primary">Site inspections</h2>
-                  <p className="mt-4 text-base sm:text-lg leading-relaxed text-charcoal/70">
-                    Most projects are quoted after a free 20-minute site walk. Commercial defits can usually be quoted
-                    from drawings and a make-good scope.
-                  </p>
+                <div>
+                  <div className="overflow-hidden rounded-3xl border border-black/10 shadow-lg">
+                    {/* Built from SITE.address so the pin follows the address above.
+                        The ?q=…&output=embed form needs no Maps API key. */}
+                    <iframe
+                      title={`Map showing ${SITE.name} at ${SITE.address}`}
+                      src={`https://www.google.com/maps?q=${encodeURIComponent(SITE.address)}&output=embed`}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      allowFullScreen
+                      className="block h-75 w-full border-0 sm:h-90 lg:h-100"
+                    />
+                  </div>
+                  <a
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(SITE.address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold tracking-widest text-primary uppercase transition-colors hover:text-charcoal"
+                  >
+                    Get directions
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M7 17 17 7M17 7H8m9 0v9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </Reveal>

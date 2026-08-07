@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "framer-
 import { useLenis } from "lenis/react";
 import logoLight from "@/assets/logo-light.svg";
 import { CtaButton } from "./CtaButton";
-import { SITE, services } from "@/lib/site-data";
+import { SITE, serviceGroups } from "@/lib/site-data";
 
 const nav = [
   { label: "Home", to: "/" },
@@ -23,6 +23,8 @@ export function Header() {
   const [hidden, setHidden] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  // Which group's services fill the right pane of the desktop menu.
+  const [activeGroup, setActiveGroup] = useState(serviceGroups[0].label);
   const { scrollY } = useScroll();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -149,30 +151,59 @@ export function Header() {
                       <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </Link>
+                  {/* Two-pane menu: group names on the left, the hovered group's
+                      services on the right. Beats a flat list of 13 links, and
+                      beats nested flyouts — the right pane never disappears
+                      while the pointer travels toward it. */}
                   <div
-                    className={`absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 pt-4 transition-all duration-200 ${
+                    className={`absolute left-1/2 top-full z-50 w-[34rem] -translate-x-1/2 pt-4 transition-all duration-200 ${
                       servicesOpen ? "visible opacity-100" : "invisible opacity-0"
                     }`}
                   >
-                    <div className="overflow-hidden rounded-xl border border-border bg-charcoal/95 p-2 shadow-2xl backdrop-blur-xl">
-                      <Link to="/strip-out-demolition" onClick={() => setServicesOpen(false)} className="block rounded-lg px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-white/5 hover:text-primary">
-                        Strip-Out Demolition
-                      </Link>
-                      {services.map((s) => (
-                        <Link
-                          key={s.slug}
-                          to="/services/$slug"
-                          params={{ slug: s.slug }}
-                          onClick={() => setServicesOpen(false)}
-                          className="block rounded-lg px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-white/5 hover:text-primary"
-                        >
-                          {s.title}
-                        </Link>
-                      ))}
-                      <Link to="/commercial-demolition" onClick={() => setServicesOpen(false)} className="block rounded-lg px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-white/5 hover:text-primary">
-                        Commercial Demolition
-                      </Link>
-                      <Link to="/services" onClick={() => setServicesOpen(false)} className="mt-1 block rounded-lg border-t border-border/60 px-4 py-2.5 text-sm font-semibold text-primary">
+                    <div className="overflow-hidden rounded-xl border border-border bg-charcoal/95 shadow-2xl backdrop-blur-xl">
+                      <div className="flex">
+                        <div className="w-1/2 border-r border-border/60 p-2">
+                          {serviceGroups.map((g) => (
+                            <button
+                              key={g.label}
+                              type="button"
+                              onMouseEnter={() => setActiveGroup(g.label)}
+                              onFocus={() => setActiveGroup(g.label)}
+                              aria-current={activeGroup === g.label}
+                              className={`flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-semibold transition-colors ${
+                                activeGroup === g.label
+                                  ? "bg-white/5 text-primary"
+                                  : "text-foreground/80 hover:bg-white/5 hover:text-foreground"
+                              }`}
+                            >
+                              {g.label}
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="m9 18 6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </button>
+                          ))}
+                        </div>
+                        <div className="w-1/2 p-2">
+                          {(serviceGroups.find((g) => g.label === activeGroup) ?? serviceGroups[0]).items.map(
+                            (s) => (
+                              <Link
+                                key={s.label}
+                                to={s.to}
+                                params={s.params}
+                                onClick={() => setServicesOpen(false)}
+                                className="block rounded-lg px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:bg-white/5 hover:text-primary"
+                              >
+                                {s.label}
+                              </Link>
+                            ),
+                          )}
+                        </div>
+                      </div>
+                      <Link
+                        to="/services"
+                        onClick={() => setServicesOpen(false)}
+                        className="block border-t border-border/60 px-4 py-3 text-sm font-semibold text-primary"
+                      >
                         View all services →
                       </Link>
                     </div>
@@ -277,32 +308,27 @@ export function Header() {
                             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                             className="overflow-hidden"
                           >
+                            {/* Groups are laid out flat here rather than behind a
+                                hover, which doesn't exist on touch. */}
                             <div className="flex flex-col gap-0.5 border-l border-border/40 pb-3 pl-4">
-                              <Link
-                                to="/strip-out-demolition"
-                                onClick={() => setOpen(false)}
-                                className="block py-1.5 text-lg text-foreground/80 transition-colors hover:text-primary"
-                              >
-                                Strip-Out Demolition
-                              </Link>
-                              {services.map((s) => (
-                                <Link
-                                  key={s.slug}
-                                  to="/services/$slug"
-                                  params={{ slug: s.slug }}
-                                  onClick={() => setOpen(false)}
-                                  className="block py-1.5 text-lg text-foreground/80 transition-colors hover:text-primary"
-                                >
-                                  {s.title}
-                                </Link>
+                              {serviceGroups.map((g) => (
+                                <div key={g.label} className="mb-2">
+                                  <p className="pt-2 pb-1 text-xs font-semibold tracking-[0.2em] text-primary uppercase">
+                                    {g.label}
+                                  </p>
+                                  {g.items.map((s) => (
+                                    <Link
+                                      key={s.label}
+                                      to={s.to}
+                                      params={s.params}
+                                      onClick={() => setOpen(false)}
+                                      className="block py-1.5 text-lg text-foreground/80 transition-colors hover:text-primary"
+                                    >
+                                      {s.label}
+                                    </Link>
+                                  ))}
+                                </div>
                               ))}
-                              <Link
-                                to="/commercial-demolition"
-                                onClick={() => setOpen(false)}
-                                className="block py-1.5 text-lg text-foreground/80 transition-colors hover:text-primary"
-                              >
-                                Commercial Demolition
-                              </Link>
                               <Link
                                 to="/services"
                                 onClick={() => setOpen(false)}

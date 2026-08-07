@@ -133,10 +133,12 @@
     overflow-x: clip;
   }
 
+  /* overflow-wrap alone breaks a word only when it would otherwise overflow.
+     word-break: break-word (deprecated) was also set and broke words far more
+     eagerly, which is what split "MELBOURNE" across lines on narrow screens. */
   h1, h2, h3, h4 {
     font-family: var(--font-heading);
     overflow-wrap: break-word;
-    word-break: break-word;
   }
 
   p, li, input, button, select, textarea {

@@ -135,7 +135,9 @@ function HomePage() {
           >
             Precision demolition · Melbourne
           </motion.p>
-          <h1 className="font-heading mt-6 max-w-5xl text-[2.6rem] leading-[1.02] text-balance sm:text-6xl lg:text-8xl">
+          {/* Fluid below sm: a fixed 2.6rem was wider than the 320px viewport can
+              hold in Akira Expanded, so "SPECIALISTS." wrapped mid-word. */}
+          <h1 className="font-heading mt-6 max-w-5xl text-[clamp(1.6rem,7.2vw,2.6rem)] leading-[1.02] text-balance sm:text-6xl lg:text-8xl">
             {["Melbourne demolition", "& strip-out specialists."].map((line, i) => (
               <span key={line} className="block overflow-hidden">
                 <motion.span

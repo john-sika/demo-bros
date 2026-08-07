@@ -111,7 +111,10 @@ export function Footer() {
         
         {/* Massive Branding at the bottom */}
         <div className="w-full mt-8 overflow-hidden flex flex-col items-center justify-end select-none pointer-events-none px-4">
-          <h2 className="text-[12.5vw] leading-none font-black text-white/5 font-heading text-center tracking-tighter">
+          {/* nowrap + a size that fits the viewport: at 12.5vw the wordmark was
+              wider than the screen, wrapped to two lines and got clipped by the
+              parent's overflow-hidden. */}
+          <h2 className="text-[10vw] leading-none font-black whitespace-nowrap text-white/5 font-heading text-center tracking-tighter">
             DEMO BROS
           </h2>
         </div>

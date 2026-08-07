@@ -1,7 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { leadSchema } from "./quote-schema";
 import { services } from "./site-data";
-import { normaliseAuPhone, sendToWebhook } from "./ghl";
+import { sendToWebhook } from "./ghl";
+import { toE164Au } from "./phone";
+
+// GHL custom fields are flat text, so a multi-select arrives as a readable list.
+function serviceLabels(slugs: string[]): string {
+  return slugs.map(serviceLabel).join(", ");
+}
 
 function serviceLabel(slug: string): string {
   if (slug === "other") return "Something else";
@@ -43,10 +49,10 @@ export const submitLead = createServerFn({ method: "POST" })
       last_name,
       full_name: data.name,
       email: data.email,
-      phone: normaliseAuPhone(data.phone),
+      phone: toE164Au(data.phone),
       suburb: data.suburb,
-      service: serviceLabel(data.service),
-      service_slug: data.service,
+      service: serviceLabels(data.service),
+      service_slug: data.service.join(","),
       details: data.details ?? "",
       source: "Website — Quote Form",
       page: data.page || "",
