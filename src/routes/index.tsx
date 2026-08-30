@@ -12,11 +12,13 @@ import { Counter } from "@/components/site/Counter";
 import { FaqList, faqJsonLd } from "@/components/site/FaqList";
 import { CtaSection } from "@/components/site/CtaSection";
 import { CtaButton } from "@/components/site/CtaButton";
+import { GoogleReviewCard, GoogleRatingSummary } from "@/components/site/GoogleReview";
 import {
   SITE,
   services,
   projects,
-  testimonials,
+  featuredTestimonials,
+  GOOGLE_RATING,
   stats,
   serviceAreas,
   generalFaqs,
@@ -337,27 +339,20 @@ function HomePage() {
       <section className="overflow-hidden py-24 lg:py-36">
         <div className="container-wide">
           <SectionHeading eyebrow="Reviews" title="Word gets around." align="center" />
+          <Reveal>
+            <GoogleRatingSummary
+              value={GOOGLE_RATING.value}
+              count={GOOGLE_RATING.count}
+              url={GOOGLE_RATING.url}
+              className="mx-auto mt-10 w-fit max-w-full"
+            />
+          </Reveal>
         </div>
-        <div className="mt-16">
+        <div className="mt-14">
+          {/* Duplicated once so the -50% marquee keyframe loops seamlessly. */}
           <div className="animate-marquee flex w-max gap-6 hover:[animation-play-state:paused]">
-            {[...testimonials, ...testimonials].map((t, i) => (
-              <figure
-                key={i}
-                className="w-[22rem] shrink-0 rounded-lg border border-border bg-card p-8 sm:w-[26rem]"
-              >
-                <div aria-label={`${t.rating} out of 5 stars`} className="flex gap-1 text-primary">
-                  {Array.from({ length: t.rating }).map((_, s) => (
-                    <svg key={s} width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                      <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                  ))}
-                </div>
-                <blockquote className="mt-5 leading-relaxed text-foreground/85">"{t.quote}"</blockquote>
-                <figcaption className="mt-6">
-                  <span className="block font-bold">{t.name}</span>
-                  <span className="text-sm text-muted-foreground">{t.role}</span>
-                </figcaption>
-              </figure>
+            {[...featuredTestimonials, ...featuredTestimonials].map((t, i) => (
+              <GoogleReviewCard key={i} t={t} className="w-[22rem] shrink-0 sm:w-[26rem]" />
             ))}
           </div>
         </div>

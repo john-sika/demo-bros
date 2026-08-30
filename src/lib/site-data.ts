@@ -14,6 +14,15 @@ export const SITE = {
   address: "103/181 Rosamond Rd, Maribyrnong VIC 3032",
 };
 
+// Google Business Profile aggregate for the review widget. The CID is derived from the
+// listing's feature id (0x4eb7d8b76f40b833:0xe5f6986c984223ff) — click-test before publish.
+// NOTE: the other '54 Google reviews' mentions across the site are still hardcoded.
+export const GOOGLE_RATING = {
+  value: 4.9,
+  count: 54,
+  url: "https://www.google.com/maps?cid=16570599471134680063",
+};
+
 export interface Service {
   slug: string;
   title: string;
@@ -819,46 +828,191 @@ export const projectDetails: Record<
   },
 };
 
-// TODO (per SEO pack): replace these placeholder testimonials with real Google reviews
-// (verified 4.9★ from 54 reviews). Do NOT publish fabricated names — pull genuine reviews
-// from the Google Business Profile before go-live.
-export const testimonials = [
+// Real reviews from the Demo Bros Google Business Profile (4.9★), captured 30 Aug 2026.
+// Names and wording are verbatim — a few long reviews are excerpted for card length, but
+// nothing is reworded. Never add a testimonial that is not on the live profile.
+//
+// `postedAt` is an approximate month derived from Google's own relative label at capture
+// ("7 months ago" -> 2026-01); the UI recomputes the label so it never goes stale.
+export type Testimonial = {
+  name: string;
+  /** Project descriptor drawn from the review itself — not a job title we invented. */
+  role: string;
+  quote: string;
+  rating: number;
+  /** Approximate month posted, YYYY-MM. */
+  postedAt: string;
+  /** Reviews on that reviewer's own Google profile, as shown on the listing. */
+  profileReviews: number;
+  localGuide: boolean;
+};
+
+export const testimonials: Testimonial[] = [
   {
-    name: "Sarah Mitchell",
-    role: "Homeowner, Kitchen Renovation",
+    name: "Michael Tsalkos",
+    role: "Rear garage demolition",
     quote:
-      "They stripped our kitchen in a day and you couldn't find a speck of dust anywhere else in the house. The most professional trade we've ever had on site.",
+      "Demo bros did a great job in demolishing the rear garage in a safe and timely manner, delivering on time. Would highly recommend the team for any job larger or small",
     rating: 5,
+    postedAt: "2026-01",
+    profileReviews: 5,
+    localGuide: false,
   },
   {
-    name: "David Chen",
-    role: "Project Manager, Fitout Company",
+    name: "Callie & James MacIntosh",
+    role: "Partial demolition · Heritage home",
     quote:
-      "We use Demo Bros on every strip out now. Program locked, SWMS spotless, zero surprises. They make us look good in front of our clients.",
+      "Demo Bros have just completed the partial demolition of our heritage home. Very competitively priced and really great people to deal with. Easy communication, very helpful and nothing was too difficult. Would highly recommend.",
     rating: 5,
+    postedAt: "2025-08",
+    profileReviews: 7,
+    localGuide: false,
   },
   {
-    name: "Rebecca Torres",
-    role: "Commercial Property Manager",
+    name: "Andrew Ma'a",
+    role: "Residential demolition",
     quote:
-      "Three floors defitted after-hours without a single tenant complaint. The handover documentation made our make-good sign-off effortless.",
+      "Absolutely incredible service, fast, left our home very tidy. Highly recommended",
     rating: 5,
+    postedAt: "2026-03",
+    profileReviews: 2,
+    localGuide: false,
   },
   {
-    name: "James O'Sullivan",
-    role: "Builder, O'Sullivan Constructions",
+    name: "Kristin W",
+    role: "Commercial project · Melbourne",
     quote:
-      "Precise, fast and honest. The site was handed over broom-swept and exactly to scope. My carpenters started the next morning without a hitch.",
+      "I recently used Demo Bros for a project in Melbourne. The full team from ops, planning and delivery were great and I would recommend them moving forward.",
     rating: 5,
+    postedAt: "2026-04",
+    profileReviews: 16,
+    localGuide: true,
   },
   {
-    name: "Amelia Nguyen",
-    role: "Homeowner, Bathroom Renovation",
+    name: "Andrew Mammarella",
+    role: "Repeat client · Small and large jobs",
     quote:
-      "Two bathrooms stripped back to the frame in a day. They protected our floors, sealed the doorways and even swept the driveway on the way out.",
+      "Used them a few times for small and large jobs. Great work and people to deal with.",
     rating: 5,
+    postedAt: "2025-11",
+    profileReviews: 4,
+    localGuide: false,
+  },
+  {
+    name: "Tamara May",
+    role: "Repeat client",
+    quote:
+      "Second time I’ve used demo bros. Great guys, great job! Good tidy up too.",
+    rating: 5,
+    postedAt: "2025-08",
+    profileReviews: 10,
+    localGuide: false,
+  },
+  {
+    name: "Cale Dudderidge",
+    role: "Commercial project · Melbourne CBD",
+    quote:
+      "Demo Bros did a great job on our commercial project in the city. With a tight program and access challenges, Henry and the team smashed it within the time frame, leaving the job tidy ready for the next trade.",
+    rating: 5,
+    postedAt: "2026-04",
+    profileReviews: 3,
+    localGuide: false,
+  },
+  {
+    name: "Shane Rieniets",
+    role: "Commercial strip-out",
+    quote:
+      "Henry and the team at Demo Bros were responsive, professional and easy to deal with. Our commercial strip-out was completed on time and at a high quality. I will use them for all of my future demolition projects.",
+    rating: 5,
+    postedAt: "2025-08",
+    profileReviews: 4,
+    localGuide: false,
+  },
+  {
+    name: "Tom Peyton",
+    role: "Demolition & permit",
+    quote:
+      "Demo Bros were great to deal with for our recent demolition. They were very responsive and easy to communicate with. Our permit and demolition were organised promptly and they did a great job. Highly recommended!",
+    rating: 5,
+    postedAt: "2026-04",
+    profileReviews: 3,
+    localGuide: false,
+  },
+  {
+    name: "Drew Tuulakitau",
+    role: "Backyard clean-up & soil levelling",
+    quote:
+      "DEMO BROS did an amazing job with our backyard clean-up and soil levelling. Super professional, on time, and easy to deal with. Price was very reasonable. The site was left spotless and perfectly levelled for the next stage. Highly recommend!",
+    rating: 5,
+    postedAt: "2026-04",
+    profileReviews: 42,
+    localGuide: true,
+  },
+  {
+    name: "Carmen Teoh Jia Wen",
+    role: "Site clean-up · Kew",
+    quote:
+      "The boys did a good job for our project at Kew! They tidied up our site and also helped me to remove an extra tree trunk at the back",
+    rating: 5,
+    postedAt: "2026-03",
+    profileReviews: 6,
+    localGuide: false,
+  },
+  {
+    name: "Toko T",
+    role: "Half house demolition · Brighton",
+    quote:
+      "We recently had a half house demolition completed in Brighton the team at Demo Bros did an absolutely fantastic job. The workmanship was outstanding we’re ecstatic with the results. Everything was handled professionally, safely, and efficiently from start to finish. The crew was reliable, well-organised, and left the site clean and ready for the next stage.",
+    rating: 5,
+    postedAt: "2026-02",
+    profileReviews: 2,
+    localGuide: false,
+  },
+  {
+    name: "John Biffaro",
+    role: "Residential demolition",
+    quote:
+      "Nothing but praise for the boys at DemoBros. Henry was responsive, prompt and to his word at the start of the process. Isabel was great from an admin point of view! Don did the job in the required time, was quick & clean. Could not be happier with the job and anything you ask is never a problem. Highly recommend them! Honest, hard working and prompt!",
+    rating: 5,
+    postedAt: "2026-05",
+    profileReviews: 3,
+    localGuide: false,
+  },
+  {
+    name: "Sharleen Kiely",
+    role: "Brick wall & fence demolition",
+    quote:
+      "I hired Demo Bros to demolish a brick wall/fence that was attached to my house and I couldn’t be happier with the result. The team was extremely professional, efficient and helpful from start to finish. The job was completed to perfection and it’s clear they take real pride in their work and in delivering the best possible outcome for their clients. A big thank you to Henry, Jacob and Dom - Fantastic job guys",
+    rating: 5,
+    postedAt: "2026-01",
+    profileReviews: 2,
+    localGuide: false,
+  },
+  {
+    name: "Joseph Uccellini",
+    role: "Property developer · Repeat client",
+    quote:
+      "I have used a few demo companies over the past 15 years in development and Demo Bros continue to impress, leaving my site in excellent condition. Their level of communication was fantastic. They arrived on their scheduled commencement date (a rarity with demo companies) and completed the work within 7 business days. They worked quickly and efficiently and are very reasonably priced.",
+    rating: 5,
+    postedAt: "2025-12",
+    profileReviews: 6,
+    localGuide: false,
+  },
+  {
+    name: "Martin Nguyen",
+    role: "Bay & Sons Building Group · Bathroom demolition",
+    quote:
+      "We recently hired Demo Bros for our bathroom demolition project, and we couldn’t be happier with the results! From start to finish, they exceeded our expectations. The team showed up on time, which is always a great start, and they were highly professional throughout the entire process. One thing that really stood out was their attention to detail when it came to cleanliness. They made sure to clean up thoroughly after the job was done, leaving our home spotless.",
+    rating: 5,
+    postedAt: "2024-08",
+    profileReviews: 2,
+    localGuide: false,
   },
 ];
+
+// The homepage marquee animates on a fixed 36s loop, so extra cards make it scroll faster
+// rather than run longer. Keep that strip to a short subset; /reviews renders them all.
+export const featuredTestimonials = testimonials.slice(0, 6);
 
 // Verified, confirmed figures only (per the SEO pack). Unverified counters removed.
 export const stats = [
